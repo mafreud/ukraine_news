@@ -3,6 +3,8 @@
     "cupertino",
     "firestore",
     "flutterfire",
-    "riverpod"
+    "mofa",
+    "riverpod",
+    "webfeed"
   ]
 }
