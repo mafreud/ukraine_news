@@ -1,6 +1,8 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
+import 'package:ukraine_news/app/links/links.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SupportListPage extends StatelessWidget {
   const SupportListPage({Key? key}) : super(key: key);
@@ -14,26 +16,34 @@ class SupportListPage extends StatelessWidget {
       body: SettingsList(
         sections: [
           SettingsSection(
-            title: Text('Common'),
             tiles: <SettingsTile>[
               SettingsTile.navigation(
                 leading: Icon(Icons.center_focus_strong),
                 title: Text('外務省'),
                 value: Text('支援先リスト'),
                 onPressed: (context) {
-                  // 外務省のページが開く
+                  _launchURL(Links.mofa);
                 },
               ),
-              SettingsTile.switchTile(
-                onToggle: (value) {},
-                initialValue: true,
-                leading: Icon(Icons.format_paint),
-                title: Text('Enable custom theme'),
+              SettingsTile.navigation(
+                leading: Icon(Icons.center_focus_strong),
+                title: Text('駐日ウクライナ大使館'),
+                onPressed: (context) {
+                  showOkAlertDialog(
+                      context: context,
+                      title: '寄付口座',
+                      message:
+                          '三菱UFJ 銀行\n広尾支店(支店番号:047)\n口座種類:普通口座\n口座番号:0972597\n口座名義:エンバシーオブウクライナ');
+                },
               ),
             ],
           ),
         ],
       ),
     );
+  }
+
+  void _launchURL(String _url) async {
+    if (!await launch(_url)) throw 'Could not launch $_url';
   }
 }
