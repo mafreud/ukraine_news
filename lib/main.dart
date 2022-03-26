@@ -14,15 +14,16 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Ukraine News',
-        theme: ThemeData(
-          brightness: Brightness.dark,
-          primaryColor: const Color(0xFF051367),
-        ),
-        home: const BottomNavigationBarPage());
+      debugShowCheckedModeBanner: false,
+      title: 'Ukraine News',
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: const Color(0xFF051367),
+      ),
+      home: const BottomNavigationBarPage(),
+    );
   }
 }
