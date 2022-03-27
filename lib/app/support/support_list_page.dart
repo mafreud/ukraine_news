@@ -38,6 +38,23 @@ class SupportListPage extends StatelessWidget {
               ),
             ],
           ),
+          SettingsSection(
+            title: const Text('その他'),
+            tiles: <SettingsTile>[
+              SettingsTile.navigation(
+                leading: const Icon(Icons.rule),
+                title: const Text('利用規約'),
+                onPressed: (_) =>
+                    UrlLauncherService.launchURL(Links.termsOfConditions),
+              ),
+              SettingsTile.navigation(
+                leading: const Icon(Icons.lock),
+                title: const Text('プライバシーポリシー'),
+                onPressed: (_) =>
+                    UrlLauncherService.launchURL(Links.privacyPolicy),
+              ),
+            ],
+          ),
         ],
       ),
     );
