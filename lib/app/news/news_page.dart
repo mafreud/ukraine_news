@@ -1,29 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ukraine_news/app/news/news_controller.dart';
 
-import 'package:http/http.dart' as http;
-import "dart:convert";
-
-class NewsPage extends StatelessWidget {
+class NewsPage extends ConsumerWidget {
   const NewsPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final newsStream = ref.watch(newsStreamProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('ニュース'),
+        title: const Text('ニュース'),
       ),
-      body: ListView.builder(
-        itemCount: 10,
-        itemBuilder: ((context, index) {
-          return const Card(
-            child: ListTile(
-              leading: Icon(Icons.south_america),
-              title: Text('The Enchanted Nightingale'),
-              subtitle: Text('Music by Julie Gable. Lyrics by Sidney Stein.'),
-            ),
-          );
-        }),
-      ),
+      body: newsStream.when(
+          loading: () =>
+              const Center(child: CircularProgressIndicator.adaptive()),
+          error: (error, _) => Text(error.toString()),
+          data: (newsList) {
+            return ListView.builder(
+              itemCount: newsList.length,
+              itemBuilder: ((context, index) {
+                final news = newsList[index];
+                return Card(
+                  child: ListTile(
+                    leading: const Icon(Icons.south_america),
+                    title: Text(news.title),
+                    subtitle: Text(news.publishedAt.toString()),
+                  ),
+                );
+              }),
+            );
+          }),
     );
   }
 }
